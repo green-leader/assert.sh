@@ -14,6 +14,7 @@ assert "seq 2" "1\n2"                   # multi-line output expected
 assert_raises 'read a; exit $a' 42 "42" # variables still work
 assert "echo 1;
 echo 2      # ^" "1\n2"                 # semicolon required!
+assert_cmd "seq 2" "seq 2"
 assert_end demo
 
 _clean() {
