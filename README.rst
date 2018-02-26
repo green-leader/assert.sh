@@ -26,6 +26,8 @@ Example
   assert_raises "true"
   # exit code of `false` is expected to be 1
   assert_raises "false" 1
+  # check the outputs of commands against each other
+  assert_cmd "seq 2" "seq 2"
   # end of test suite
   assert_end examples
 
@@ -33,7 +35,7 @@ If you had written the above snippet into ``tests.sh`` you could invoke it
 without any extra hassle::
 
   $ ./tests.sh
-  all 4 examples tests passed in 0.014s.
+  all 5 examples tests passed in 0.014s.
 
 Watch out to have ``tests.sh`` executable (``chmod +x tests.sh``), otherwise
 you need to invoke it with ``bash tests.sh``.
@@ -63,7 +65,7 @@ The overall status code is 1 (except if you modified the exit code manually)::
 Features
 ========
 
-+ lightweight interface: ``assert`` and ``assert_raises`` *only*
++ lightweight interface: ``assert``, ``assert_cmd`` and ``assert_raises``
 + minimal setup -- source ``assert.sh`` and you're done
 + test grouping in individual suites
 + time benchmarks with real-time display of test progress
@@ -118,6 +120,11 @@ Reference
   control sequences ``echo -e`` interprets, eg. ``\n`` for a newline. The
   default `stdout` is assumed to be empty.
 
++ ``assert_cmd <command> [stdout] [stdin]``
+
+  Check for an expected output against another command. If `stdin` is supplied
+  it will be used for both commands.
+
 + ``assert_raises <command> [exitcode] [stdin]``
 
   Verify `command` terminated with the expected status code. The default
@@ -171,6 +178,8 @@ variable          corresponding option
 Changelog
 =========
 
+1.2
+  * Added ``assert_cmd`` command and associated documentation
 1.1
   * Added ``skip`` and ``skip_if`` commands.
   * Added support for ``set -e`` environments (closes `#6
