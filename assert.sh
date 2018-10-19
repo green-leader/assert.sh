@@ -115,10 +115,10 @@ assert() {
 }
 
 assert_cmd() {
-    # assert <command> <expected stdout> [stdin]
+    # assert <command> <expected command> [stdin for both]
     (( tests_ran++ )) || :
     [[ -z "$DISCOVERONLY" ]] || return
-    expected="$(eval 2>/dev/null $2)" || true
+    expected="$(eval 2>/dev/null $2 <<< ${3:-})" || true
 	result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
     if [[ "$result" == "$expected" ]]; then
         [[ -z "$DEBUG" ]] || echo -n .
